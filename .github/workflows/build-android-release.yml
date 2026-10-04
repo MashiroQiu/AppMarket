@@ -20,8 +20,10 @@ jobs:
 
       - name: Install required SDK components
         run: |
-          yes | sdkmanager "platforms;android-37"
-          yes | sdkmanager "build-tools;37.0.0" || echo "skip build-tools"
+          SDKMANAGER=$(find "${ANDROID_HOME}/cmdline-tools" -name sdkmanager -type f | head -n 1)
+          echo "Found sdkmanager: $SDKMANAGER"
+          yes | "$SDKMANAGER" "platforms;android-37"
+          yes | "$SDKMANAGER" "build-tools;37.0.0" || echo "skip build-tools"
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
